@@ -3,23 +3,23 @@ A Nifty little JavaScript single page app to calculate the shortest path between
 
 This single page app consists of a small webpage and javascript to find the shortest amount of jumps between two star systems in the game EVE Online. 
 
-RvB was a corporation in EVE but has left and was used to help courier contracts where players transfer in game items originally. Now the EVE data dumps, breadth-first-search to mainly find the length (Jumps), a cached larger adjacency map to skip from the PHP an be faster, use jQuery Autocomplete, and a simple calculator that may be useful for similar applications.
+RvB was a corporation in EVE but has left and was used to help courier contracts where players transfer in game items originally. Now the EVE data dumps, breadth-first-search to mainly find the length (Jumps), a cached larger adjacency map to skip from the PHP an be faster, use jQuery Autocomplete, basic ETL, and a simple calculator that may be useful for similar applications.
 
 Either way was fun and a great Corp, tons of PvP and cool people. I haven't played EVE for years either but maybe sometime Pew Pew a bit another time!
 
 ## Load SQL dumps
 See https://wiki.eveuniversity.org/Static_Data_Export
 
-Download SQL dumps
+### Extract - Download SQL dumps
 [mapRegions](https://www.fuzzwork.co.uk/dump/latest/mapRegions.sql.bz2)
 [mapSolarSystems](https://www.fuzzwork.co.uk/dump/latest/mapSolarSystems.sql.bz2)
 [mapSolarSystemJumps](https://www.fuzzwork.co.uk/dump/latest/mapSolarSystemJumps.sql.bz2)
 [mapConstellations](https://www.fuzzwork.co.uk/dump/latest/mapConstellations.sql.bz2)
 
-Uncompress the files
+### Transform - Uncompress the files
 `bunzip2 *`
 
-Load SQL files into your MySQL database tables:
+### Load - Load SQL files into your MySQL database tables:
 ```mysql -u username -p database_name < mapConstellationJumps.sql
 mysql -u username -p database_name < mapConstellations.sql
 mysql -u username -p database_name < mapRegions.sql
