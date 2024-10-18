@@ -1,7 +1,11 @@
 # eve-online-jump-distance
 A Nifty little JavaScript single page app to calculate the shortest path between Star System nodes using a breadth-first-search. It includes a PHP generator script that builds a JSON formatted adjacency map from an SQL dump of the EVE Online universe, which is client side cached to enable real time lookups.
 
-This single page app consists of a small webpage and javascript to find the shortest amount of jumps between two star systems in the game EVE Online. Feel free to change the demo page and use your own pricing calculations.
+This single page app consists of a small webpage and javascript to find the shortest amount of jumps between two star systems in the game EVE Online. 
+
+RvB was a corporation in EVE but has left and was used to help courier contracts where players transfer in game items originally. Now the EVE data dumps, breadth-first-search to mainly find the length (Jumps), a cached larger adjacency map to skip from the PHP an be faster, use jQuery Autocomplete, and a simple calculator that may be useful for similar applications.
+
+Either way was fun and a great Corp, tons of PvP and cool people. I haven't played EVE for years either but maybe sometime Pew Pew a bit another time!
 
 ## Load SQL dumps
 See https://wiki.eveuniversity.org/Static_Data_Export
