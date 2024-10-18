@@ -75,7 +75,7 @@ function systems_ac($minsec)
     $db_systems= db_systems($minsec);
     foreach ($db_systems as $row) {
         $system=new dynObject();
-        $system->t=$row['system'];
+        $system->t=$row['systems'];
         $row['sec']=round($row['sec'],1);
         if ($row['sec']==1){
             $row['sec']='1.0';
