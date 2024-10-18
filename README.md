@@ -20,11 +20,12 @@ Uncompress the files
 `bunzip2 *`
 
 Load SQL files into your MySQL database tables:
-`mysql -u username -p database_name < mapConstellationJumps.sql`
-`mysql -u username -p database_name < mapConstellations.sql`
-`mysql -u username -p database_name < mapRegions.sql`
-`mysql -u username -p database_name < mapSolarSystemJumps.sql`
-`mysql -u username -p database_name < mapSolarSystems.sql`
+```mysql -u username -p database_name < mapConstellationJumps.sql
+mysql -u username -p database_name < mapConstellations.sql
+mysql -u username -p database_name < mapRegions.sql
+mysql -u username -p database_name < mapSolarSystemJumps.sql
+mysql -u username -p database_name < mapSolarSystems.sql
+```
 
 ## Regenerate eve data from SQL dumps into JavaScript
 If you wish to re-generate the star system database you should obtain a copy of the EVE online universe SQL dump, load it into a MySQL database running on the same host as the php code, and copy `/ws/dbinfo.php.txt` to `/ws/dbinfo.php` (substituting your database credentials in the process).
