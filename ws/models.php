@@ -25,15 +25,16 @@ class dynObject {
 function db_systems($minsec=null){
     global $dbinfo;
     $dbConnection = new PDO("mysql:dbname={$dbinfo['database']};host={$dbinfo['host']}", $dbinfo['user'], $dbinfo['pass']);
-    $sql="SELECT ss.solarSystemID-30000000 as id, ss.solarSystemName as system, ROUND(ss.security,1) as sec,c.constellationName as constellation, r.regionName as region
-    FROM evesdd_crucible_11.mapsolarsystems as ss
-    JOIN mapconstellations as c ON ss.constellationID = c.constellationID
-    JOIN mapregions as r ON ss.regionID = r.regionID";    
+    $sql="SELECT ss.solarSystemID-30000000 as id, ss.solarSystemName as systems, ROUND(ss.security,1) as sec,c.constellationName as constellation, r.regionName as region
+    FROM mapSolarSystems as ss
+    JOIN mapConstellations as c ON ss.constellationID = c.constellationID
+    JOIN mapRegions as r ON ss.regionID = r.regionID";
     if (!is_null($minsec)){
         $sql.=" WHERE ss.security >= {$minsec} OR ss.solarSystemName = 'A3-RQ3'";
     }        
     return $dbConnection->query($sql);
 }
+
 /*
  * Database query for jumps
  */
@@ -41,14 +42,16 @@ function db_jumps($minsec=null){
     global $dbinfo;
     $dbConnection = new PDO("mysql:dbname={$dbinfo['database']};host={$dbinfo['host']}", $dbinfo['user'], $dbinfo['pass']);
     $sql="SELECT msj.fromSolarSystemID-30000000 as fromSolarSystemID, msj.toSolarSystemID-30000000 as toSolarSystemID #, s1.security as fromSec, s2.security as toSec
-    FROM mapsolarsystemjumps as msj
-    JOIN mapsolarsystems as s1 on msj.fromSolarSystemID=s1.solarSystemID
-    JOIN mapsolarsystems as s2 on msj.toSolarSystemID=s2.solarSystemID";    
+    FROM mapSolarSystemJumps as msj
+    JOIN mapSolarSystems as s1 on msj.fromSolarSystemID=s1.solarSystemID
+    JOIN mapSolarSystems as s2 on msj.toSolarSystemID=s2.solarSystemID";
+
     if (!is_null($minsec)){
         $sql.=" WHERE s1.security >= ".(float)$minsec." AND s2.security >= ".(float)$minsec;
     }
     return $dbConnection->query($sql);
 }
+
 function jump_nodes($minsec){
     $result=db_jumps($minsec);
     $jumps=array();
@@ -62,6 +65,7 @@ function jump_nodes($minsec){
     }
     return $jumps;
 }
+
 /*
  * Generates autocomplete data
  */
@@ -90,12 +94,13 @@ function systems_by_name($minsec){
     $systems=array();
     $db_systems=db_systems($minsec);    
     foreach ($db_systems as $row) {
-        $nospace=str_replace(' ', '', $row['system'].'');
+        $nospace=str_replace(' ', '', $row['systems'].'');
         $nodash=str_replace('-', '', $nospace.'');
         $systems[$nodash]=$row['id'];
     }
     return($systems);
 }
+
 /* 
  * Generates systemName to ID lookup table
  */
@@ -114,7 +119,7 @@ function systems_by_id($minsec){
     $db_systems=db_systems($minsec);    
     foreach ($db_systems as $row) {
         $systems->$row['id']=new dynObject();
-        $systems->$row['id']->system=$row['system'];
+        $systems->$row['id']->system=$row['systems'];
         $systems->$row['id']->sec=$row['sec'];
         $systems->$row['id']->region=$row['region'];
     }
@@ -129,3 +134,4 @@ function generate_evedata_js(){
         .';var JUMP_NODES_ALL='.str_replace('"','',json_encode(jump_nodes(null)))
         .';var JUMP_NODES_HISEC='.str_replace('"','',json_encode(jump_nodes($minsec)));
 }
+
